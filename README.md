@@ -22,6 +22,12 @@ python -m src.report --proteins data/synthetic_protein_matrix.csv --metadata dat
 pytest
 ```
 
+To open the local research-demo interface:
+
+```bash
+streamlit run app.py
+```
+
 ## Data safety
 
 The included files are entirely synthetic. Do not upload identifiable patient data, unpublished clinical data, or data that lacks ethical and institutional approval. See [data governance](governance/data_privacy.md).
@@ -40,5 +46,5 @@ outputs/     Generated reports, excluded from version control
 
 ## Portfolio roadmap
 
-The first release delivers the deterministic analysis core. Planned work: pathway enrichment, literature retrieval with source traceability, a constrained Gemini-powered report writer, a Streamlit interface, and evaluation on pre-registered synthetic benchmark scenarios.
+The first release delivers the deterministic analysis core and a local Streamlit interface. Planned work: pathway enrichment, literature retrieval with source traceability, a constrained Gemini-powered report writer, and evaluation on pre-registered synthetic benchmark scenarios.
 Auditable AI workflow for proteomics quality control, biomarker analysis, and evidence-based reporting.
