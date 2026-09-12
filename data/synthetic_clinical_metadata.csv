@@ -1,0 +1,13 @@
+sample_id,response,batch,timepoint
+S001,responder,A,baseline
+S002,responder,A,baseline
+S003,responder,B,baseline
+S004,responder,B,baseline
+S005,non_responder,A,baseline
+S006,non_responder,A,baseline
+S007,non_responder,B,baseline
+S008,non_responder,B,baseline
+S009,responder,A,week_8
+S010,non_responder,A,week_8
+S011,responder,B,week_8
+S012,non_responder,B,week_8

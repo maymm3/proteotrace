@@ -1,0 +1,4 @@
+ProteoTrace deterministic analysis run
+proteins=data/synthetic_protein_matrix.csv
+metadata=data/synthetic_clinical_metadata.csv
+Research use only. Results require expert scientific review.
