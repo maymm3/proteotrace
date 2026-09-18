@@ -59,7 +59,7 @@ with tab_results:
     st.subheader("Responder versus non-responder comparison")
     results = differential_by_response(proteins, metadata)
     st.dataframe(results, width="stretch")
-    st.caption("Uses Welch t-tests for the synthetic two-group demonstration. Real-study modelling must account for design, covariates, multiplicity, and repeated measures.")
+    st.caption("Uses Welch t-tests with Benjamini-Hochberg false-discovery-rate adjustment for the synthetic two-group demonstration. Real-study modelling must account for design, covariates, multiplicity, and repeated measures.")
     st.bar_chart(results.set_index("protein")["mean_difference"])
 
 with tab_governance:

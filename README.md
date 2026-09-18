@@ -9,7 +9,7 @@ ProteoTrace is a portfolio project designed for translational proteomics researc
 1. Validates protein-abundance and clinical-metadata files.
 2. Measures missingness and flags outlier samples.
 3. Tests whether batch is associated with outcome.
-4. Compares responder and non-responder protein abundance with a transparent Welch t-test.
+4. Compares responder and non-responder protein abundance with transparent Welch t-tests and Benjamini-Hochberg false-discovery-rate adjustment.
 5. Exports a reproducible CSV report with quality-control findings and ranked candidate proteins.
 
 ## Quick start
