@@ -2,6 +2,8 @@
 
 **An auditable, research-use-only workflow for proteomics quality control, biomarker analysis, and evidence-based reporting.**
 
+The test suite runs automatically on pushes and pull requests with Python 3.11 and 3.12.
+
 ProteoTrace is a portfolio project designed for translational proteomics research. It demonstrates a safe architecture in which deterministic Python functions perform all calculations, while a future language-model layer may only explain validated outputs and cite sources. It is not a diagnostic or clinical decision-support system.
 
 ## What it does
