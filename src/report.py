@@ -3,12 +3,25 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import platform
 from pathlib import Path
 
+import numpy
 import pandas as pd
+import scipy
 
 from src.qc import batch_response_table, missingness_by_sample, outlier_samples, validate_inputs
 from src.statistics import differential_by_response
+
+
+def _sha256(path: str) -> str:
+    """Return a streaming SHA-256 digest for an input file."""
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def build_report(proteins_path: str, metadata_path: str, output_dir: str) -> None:
@@ -25,7 +38,13 @@ def build_report(proteins_path: str, metadata_path: str, output_dir: str) -> Non
     differential_by_response(proteins, metadata).to_csv(out / "differential_proteins.csv", index=False)
     (out / "run_manifest.txt").write_text(
         "ProteoTrace deterministic analysis run\n"
+        f"python_version={platform.python_version()}\n"
+        f"pandas_version={pd.__version__}\n"
+        f"numpy_version={numpy.__version__}\n"
+        f"scipy_version={scipy.__version__}\n"
         f"proteins={proteins_path}\nmetadata={metadata_path}\n"
+        f"proteins_sha256={_sha256(proteins_path)}\n"
+        f"metadata_sha256={_sha256(metadata_path)}\n"
         "Research use only. Results require expert scientific review.\n"
     )
 
