@@ -28,7 +28,12 @@ def benjamini_hochberg(p_values: pd.Series) -> pd.Series:
 
 
 def differential_by_response(proteins: pd.DataFrame, metadata: pd.DataFrame) -> pd.DataFrame:
-    """Run Welch tests for every protein and return a ranked, reproducible table."""
+    """Run Welch tests with explicit handling of uninformative protein measurements.
+
+    A protein is tested only when each response group has at least two finite
+    observations and the pooled observations are not all identical. Otherwise
+    inferential fields remain NaN and ``test_status`` records why no test ran.
+    """
     merged = metadata[["sample_id", "response"]].merge(proteins, on="sample_id", validate="one_to_one")
     groups = merged["response"].dropna().unique().tolist()
     if len(groups) != 2:
@@ -38,7 +43,14 @@ def differential_by_response(proteins: pd.DataFrame, metadata: pd.DataFrame) -> 
     for protein in proteins.columns.drop("sample_id"):
         x = merged.loc[merged.response == first, protein].dropna()
         y = merged.loc[merged.response == second, protein].dropna()
-        statistic, p_value = ttest_ind(x, y, equal_var=False)
+        status = "tested"
+        statistic = p_value = float("nan")
+        if len(x) < 2 or len(y) < 2:
+            status = "insufficient_observations"
+        elif x.nunique() == 1 and y.nunique() == 1:
+            status = "constant_values"
+        else:
+            statistic, p_value = ttest_ind(x, y, equal_var=False)
         rows.append({
             "protein": protein,
             "group_1": first,
@@ -47,6 +59,7 @@ def differential_by_response(proteins: pd.DataFrame, metadata: pd.DataFrame) -> 
             "mean_group_2": y.mean(),
             "mean_difference": x.mean() - y.mean(),
             "p_value": p_value,
+            "test_status": status,
             "n_group_1": len(x),
             "n_group_2": len(y),
         })

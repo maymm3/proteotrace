@@ -12,6 +12,8 @@ ProteoTrace is a portfolio project designed for translational proteomics researc
 4. Compares responder and non-responder protein abundance with transparent Welch t-tests and Benjamini-Hochberg false-discovery-rate adjustment.
 5. Exports a reproducible CSV report with quality-control findings and ranked candidate proteins.
 
+For differential analysis, proteins with fewer than two observed values in either response group are marked `insufficient_observations`; proteins whose values are constant within both groups are marked `constant_values`. These rows retain `NaN` inferential statistics and are excluded from the false-discovery-rate adjustment rather than being presented as significant or nonsignificant tests. This is a basic safeguard, not a substitute for study-specific missing-data and variance diagnostics.
+
 ## Quick start
 
 ```bash
